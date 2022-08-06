@@ -16,28 +16,26 @@ http {
 	types_hash_max_size 4096;
 
 	{% for endpoint in nginx_vhosts %}
-		server {
-			listen {{ endpoint.listen }};
-			server_name {{ endpoint.server_name }};
+	server {
+		listen {{ endpoint.listen }};
+		server_name {{ endpoint.server_name }};
 
-			{{ endpoint.extra_parameters }}
-		}
+		{{ endpoint.extra_parameters }}
+	}
 	{% endfor %}
 
 }
 
+{% if nginx_vhosts_stream %}
 stream {
 	{% for endpoint in nginx_vhosts_stream %}
-		upstream {{ endpoint.upstream_name }} {
-			server {{ endpoint.upstream_server }};
-		}
-		server {
-			listen {{ endpoint.listen }};
-			proxy_pass {{ endpoint.upstream_name }};
-		}
+	upstream {{ endpoint.upstream_name }} {
+		server {{ endpoint.upstream_server }};
+	}
+	server {
+		listen {{ endpoint.listen }};
+		proxy_pass {{ endpoint.upstream_name }};
+	}
 	{% endfor %}
-
-
-
-
 }
+{% endif %}

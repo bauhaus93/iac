@@ -1,0 +1,13 @@
+[Unit]
+Description=Filebeat Service
+Requires=network.target
+After=network.target
+
+[Service]
+
+ExecStart=filebeat -c /usr/share/filebeat-{{ elk_version }}-linux-x86_64/filebeat.yml
+Type=forking
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -24,3 +24,15 @@
     mode: "0644"
     owner: root
     validate: "filebeat test config -c %s"
+
+- name: Create filebeat service, if not existing
+  template:
+    src: templates/filebeat.service.j2
+    dest: /etc/systemd/system/filebeat.service
+    owner: root
+
+- name: Enable and start filebeat service, if not running
+  service:
+    name: "filebeat"
+    state: started
+    enabled: yes

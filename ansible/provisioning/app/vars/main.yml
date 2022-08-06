@@ -8,6 +8,8 @@ nginx_vhosts:
         proxy_read_timeout 90s;
       }
 
+nginx_vhosts_stream:
+
 elk_version: "{{ lookup('env', 'ELK_VERSION') or '8.2.2' }}"
 
 filebeat_inputs:
