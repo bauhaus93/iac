@@ -7,12 +7,14 @@ nginx_vhosts:
         proxy_set_header Authorization "";
         proxy_read_timeout 90s;
       }
-  - listen: "12345 default_server"
-    server_name: logs.test
+
+nginx_vhosts_stream:
+  - listen: 12345
+    upstream_server: 0.0.0.0:5044
+    upstream_name: logstash
     extra_parameters: |
       location / {
-        proxy_pass http://0.0.0.0:5044;
-        proxy_set_header Authorization "";
+        proxy_pass 0.0.0.0:5044;
         proxy_read_timeout 90s;
       }
 

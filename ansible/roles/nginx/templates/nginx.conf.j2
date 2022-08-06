@@ -25,3 +25,19 @@ http {
 	{% endfor %}
 
 }
+
+stream {
+	{% for endpoint in nginx_vhosts_stream %}
+		upstream {{ endpoint.upstream_name }} {
+			server {{ endpoint.upstream_server }};
+		}
+		server {
+			listen {{ endpoint.listen }};
+			proxy_pass {{ endpoint.upstream_name }};
+		}
+	{% endfor %}
+
+
+
+
+}
