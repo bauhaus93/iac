@@ -2,6 +2,13 @@ input {
     {{ logstash_inputs }}
 }
 
+{% if logstash_filters %}
+filter {
+    {{ logstash_filters }}
+}
+{% endif %}
+
+
 output {
     {{ logstash_outputs }}
 }

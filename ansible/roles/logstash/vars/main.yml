@@ -10,4 +10,6 @@ logstash_inputs: |
 logstash_outputs: |
   elasticsearch {
     hosts => ["http://{{ elasticsearch_container }}:9200"]
+    index => "my_index"
+    document_type => "my_type"
   }

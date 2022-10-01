@@ -3,10 +3,9 @@ Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  config.ssh.insert_key = true
-  config.ssh.forward_agent = true
   # config.ssh.private_key_path = "/home/jakob/.ssh/id_rsa"
-  # config.ssh.username = "vagrant"
+  config.ssh.insert_key = true
+  config.ssh.username = "vagrant"
   # config.ssh.password = "vagrant"
 
 
@@ -34,7 +33,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "app" do |app|
-    app.vm.hostname = "app1.test"
+    app.vm.hostname = "app.test"
     app.vm.network :private_network, ip: "192.168.56.11"
 
     app.vm.provision :ansible do |ansible|

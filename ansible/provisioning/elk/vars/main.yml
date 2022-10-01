@@ -27,6 +27,18 @@ firewall_open_ports:
   - { port: 12345, prot: tcp }
   - { port: 22, prot: tcp }
 
+logstash_filters: |
+  grok {
+    match => {
+      "message" => "%{TIMESTAMP_ISO8601:log-date} %{NUMBER:pid} %{LOGLEVEL:log-level} %{WORD:db-name} (?<module>[\w\._]+): %{GREEDYDATA:message}"
+    }
+    overwrite => ["message"]
+  }
+  date {
+    match => [ "log-date", "yyyy-MM-dd HH:mm:ss,SSS" ]
+    target => "@timestamp"
+  }
+
 ansible_ssh_private_key_file: "{{ lookup('env', 'SSH_KEY_FILE') }}"
 authorized_keys:
   - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKbyJY447jdeDk5y0aAgN3Rwc6EkEiJfyCL/xzgiZwWEEp3+AOZ6MIt6OIr9CyE1bglkcSDEcvGO0TWMLar+GSCzeI8s3r2yDmgy/qF7pCBfBjNc5d+4k5y0idOQKYNc5kHfDasK189q8Emi+O6IMttzwKKtlkMOa11t/mIOLCPeC5A6XPz05xQHRATgZigMp82jvAwwrojpoR7Ua+Z2k5ksrj+jJQIxyqnmQM5UpO9mthRrojzMEpKIpOOPHVlvW32WmGGDH145gaOBQtgnpQ7qw1myPaWgM/h6xhO8dU4gHmmZutLKZql/ooJLYl1vnFFjhmIp6daStsVqVqm

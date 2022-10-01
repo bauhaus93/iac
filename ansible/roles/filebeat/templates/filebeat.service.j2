@@ -6,7 +6,6 @@ After=network.target
 [Service]
 
 ExecStart=filebeat -c /usr/share/filebeat-{{ elk_version }}-linux-x86_64/filebeat.yml
-Type=forking
 Restart=always
 
 [Install]
